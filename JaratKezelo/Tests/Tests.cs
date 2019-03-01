@@ -27,7 +27,7 @@ namespace JaratKezelo.Tests
         }
 
         [Test]
-        public void RosszBemenet()
+        public void AdatDuplikalasHibaTest()
         {
             j.ujJarat("222", "Tajgetosz", "Athén", new DateTime(2019, 12, 06, 12, 30, 30));
             Assert.Throws<ArgumentException>(() =>
@@ -36,6 +36,18 @@ namespace JaratKezelo.Tests
                }
                );
         }
+
+        [Test]
+        public void Kesesnegativ()
+        {
+            j.ujJarat("222", "Tajgetosz", "Athén", new DateTime(2019, 12, 06, 12, 50, 10));
+            j.Keses("222", 5);
+            Assert.Throws<NegativKesesException>(() =>
+            {
+                j.Keses("222", -6);
+            });
+        }
+
 
 
     }
