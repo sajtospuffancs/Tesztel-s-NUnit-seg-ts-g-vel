@@ -34,7 +34,7 @@ namespace JaratKezelo
             {
                 if(sz.jaratSzam.Contains(jaratSzam))
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Létező járatszám");
                 }
             }
                 jaratok.Add(new Járat(jaratSzam, repterHonnan, repterHova, indulas));
@@ -50,9 +50,12 @@ namespace JaratKezelo
             {
                 if (sz.jaratSzam.Equals(jaratSzam))
                 {
-                    if (sz.keses - keses < 0)
+                    if (keses < 0)
                     {
-                        throw new NegativKesesException(keses);
+                        if (sz.keses + keses < 0)
+                        {
+                            throw new NegativKesesException(sz.keses+keses);
+                        }
                     }
                     else
                     {
@@ -62,11 +65,23 @@ namespace JaratKezelo
             }
         }
 
-        
-       /* void Keses(string jaratSam, TimeSpan keses)
+        public int JelenlegiKeses(string jaratSzam)
         {
+            foreach(Járat sz in jaratok)
+            {
+                if (sz.jaratSzam.Equals(jaratSzam))
+                {
+                    return sz.keses;
+                }
+            }
+            throw new ArgumentException("Hibás/nem létező járatszám");
+        }
 
-        }*/
+
+        /* void Keses(string jaratSam, TimeSpan keses)
+         {
+
+         }*/
 
 
         public DateTime MikorIndul(string jaratSzam)
@@ -82,7 +97,7 @@ namespace JaratKezelo
                 {
                 }
             }
-            throw new ArgumentException();
+            throw new ArgumentException("Hibás járatszám");
         }
 
         public List<string> JaratokRepuloterrol(string repter)
